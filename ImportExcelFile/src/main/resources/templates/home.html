@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Excel</title>
+    <link rel="stylesheet" href="/CSS/home.css"> <!-- Link to external CSS -->
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Our Dashboard</h1>
+        <p>Click the button below to download your Excel file.</p>
+        <button onclick="downloadExcel()">Download Excel</button>
+    </div>
+
+    <script>
+        function downloadExcel() {
+            fetch('/data')
+                .then(response => response.blob())
+                .then(blob => {
+                    let link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'employee_client_data.xlsx';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                })
+                .catch(error => console.error('Error downloading file:', error));
+        }
+    </script>
+</body>
+</html>
